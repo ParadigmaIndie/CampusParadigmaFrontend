@@ -1,12 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Navc />
+    <router-view />
   </div>
 </template>
+
+<script>
+import Navc from "@/components/NavC.vue";
+
+export default {
+  components: {
+    Navc,
+  },
+};
+</script>
 
 <style>
 #app {
