@@ -8,7 +8,7 @@
         <router-link
           v-if="!usuarioAutenticado"
           to="/login"
-          class="navbar-brand m-2 text-white"
+          class="navbar-brand m-2 text-white "
         >
           Log In
         </router-link>
@@ -21,10 +21,17 @@
         </router-link>
         <router-link
           v-if="usuarioAutenticado"
-          to="/signup"
+          to="/"
           class="navbar-brand m-2 text-white"
         >
-          Welcome {{ usuarioAutenticadoName }}
+          <div class="me-5">
+            <p class="my-0 py-0">
+              Bienvenido {{ usuarioAutenticadoObject.username }}
+            </p>
+            <p class="my-0 py-0 fw-lighter">
+              email {{ usuarioAutenticadoObject.email }}
+            </p>
+          </div>
         </router-link>
       </div>
     </div>
@@ -36,7 +43,7 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "NavC",
   computed: {
-    ...mapGetters(["usuarioAutenticado", "usuarioAutenticadoName"]),
+    ...mapGetters(["usuarioAutenticado", "usuarioAutenticadoObject"]),
   },
 };
 </script>

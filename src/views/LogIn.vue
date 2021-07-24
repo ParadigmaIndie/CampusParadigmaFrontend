@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container my-5 border rounded-lg"
+    class="container my-5 border rounded-3"
     style="background-color:#011F40;"
   >
     <h1 class="my-3 text-white">Escriba sus datos</h1>
