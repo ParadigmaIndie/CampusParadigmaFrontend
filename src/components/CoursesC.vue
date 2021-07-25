@@ -1,7 +1,7 @@
 <template>
   <div id="all" class="m-2">
     <div class="container my-4 ">
-      <p class="fs-1 fw-bolder text-start">Cursos</p>
+      <p class="fs-1 fw-bolder text-start">{{ titleC }}</p>
       <div class=" row ">
         <div v-for="(course, index) in courses" :key="index" class="col-sm-4">
           <div class="card my-2" style="">
@@ -44,6 +44,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import apiCourses from "@/utils/fetchCourses";
 export default {
   data() {
@@ -61,6 +62,28 @@ export default {
   },
   created() {
     this.fetchCourses();
+  },
+  computed: {
+    ...mapGetters([
+      "usuarioAutenticado",
+      "usuarioAutenticadoObject",
+      "tokenObject",
+    ]),
+    titleC() {
+      if (this.$route.params.coursestyp === "mycourses") {
+        apiCourses
+          .allCoursesToSee(
+            this.usuarioAutenticadoObject.email,
+            this.tokenObject
+          )
+          .then((res) => (this.courses = res))
+          .finally();
+        return "Mis Cursos";
+      } else {
+        this.fetchCourses();
+        return "Cursos";
+      }
+    },
   },
 };
 </script>

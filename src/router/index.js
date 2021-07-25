@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import LogIn from '../views/LogIn.vue'
+import Courses from '../views/Courses.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -16,6 +17,12 @@ const routes = [
     path: '/login',
     name: 'LogIn',
     component: LogIn
+  },
+  {
+    path: '/courses/:coursestyp',
+    name: 'Courses',
+    component: Courses,
+    meta: { rutaProtegida: true }
   },
   {
     path: '/about',
@@ -36,7 +43,7 @@ router.beforeEach((to, from, next) => {
       next();
     }
     else {
-      next('/ingreso')
+      next('/login')
     }
   } else {
     next();

@@ -59,7 +59,7 @@ export default new Vuex.Store({
 
     cerrarSesion({ commit }) {
       commit('setUser', null)
-      router.push('/ingreso')
+      router.push('/login')
       localStorage.removeItem('usuario')
     },
 

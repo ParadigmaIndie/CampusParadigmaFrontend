@@ -9,8 +9,7 @@
 import CoursesC from "@/components/CoursesC.vue";
 
 export default {
-  
-  name: "Home",
+  name: "Courses",
   components: {
     CoursesC,
   },
