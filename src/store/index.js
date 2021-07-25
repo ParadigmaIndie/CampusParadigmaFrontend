@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    token: null
+    token: null,
   },
   mutations: {
     setUser(state, payload) {
@@ -63,41 +63,7 @@ export default new Vuex.Store({
       localStorage.removeItem('usuario')
     },
 
-    async allCourses({ commit }, token) {
-      try {
-        const res = await fetch('http://localhost:8080/api/v1/courses',
-          {
-            method: 'GET'
-          })
 
-        const courses = await res.json();
-
-        if (courses.error) {
-          return console.log(courses.error)
-        }
-
-        console.log('Courses', courses)
-        //commit('Courses', courses)
-
-        //var base64Url = token.Bearer.split('.')[1];
-        //var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        //var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        //  return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        //}).join(''));
-        //console.log('token', JSON.parse(jsonPayload));
-        //const user = {
-        //  username: JSON.parse(jsonPayload).sub,
-        //  email: JSON.parse(jsonPayload).email
-        //}
-
-        //commit('setUser', user);
-
-        //localStorage.setItem('usuario', JSON.stringify(userDB))
-        //router.push('/')
-      } catch (error) {
-        console.log(error)
-      }
-    },
   },
   getters: {
     usuarioAutenticado(state) {
