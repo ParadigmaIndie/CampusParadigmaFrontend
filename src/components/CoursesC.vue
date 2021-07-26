@@ -27,11 +27,11 @@
                   <strong><span> Tags:</span></strong>
                   {{ course.tags }}
                 </p>
-                <a
-                  href="#"
+                <router-link
+                  :to="{ name: 'Videos', params: { courseid: course.id } }"
                   class="btn  btn-primary m-4  d-flex justify-content-center"
                   style="width: 10rem;"
-                  >Ver el curso</a
+                  >Ver el curso</router-link
                 >
               </div>
             </div>
