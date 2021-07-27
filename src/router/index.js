@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 import LogIn from '../views/LogIn.vue'
 import Videos from '../views/Videos.vue'
 import Courses from '../views/Courses.vue'
-
+import Video from '../views/Video.vue'
 import store from '../store/index'
 
 Vue.use(VueRouter)
@@ -30,6 +30,12 @@ const routes = [
     path: '/videos/:courseid',
     name: 'Videos',
     component: Videos,
+    //meta: { rutaProtegida: true }
+  },
+  {
+    path: '/video/:videoid',
+    name: 'Video',
+    component: Video,
     //meta: { rutaProtegida: true }
   },
   {

@@ -4,7 +4,7 @@
 
     <div v-for="(video, index) in videos" :key="index" class="list-group">
       <router-link
-        :to="{ name: 'Home', params: { coursestyp: 'mycourses' } }"
+        :to="{ name: 'Video', params: { videoid: video.id } }"
         class="list-group-item  list-group-item-action flex-column align-items-between"
       >
         <div class=" d-flex w-400 justify-content-between align-items-center">
