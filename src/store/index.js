@@ -18,6 +18,31 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async userSingUp({ commit }, usuario) {
+      try {
+        console.log(usuario)
+        const res = await fetch('http://localhost:8080/api/v1/registration',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify({
+              username: usuario.username,
+              email: usuario.email,
+              password: usuario.password,
+            })
+          })
+        const token = await res.json();
+        if (token.error) {
+          return console.log(token.error)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
     async userLoggin({ commit }, usuario) {
       try {
         const res = await fetch('http://localhost:8080/login',

@@ -1,11 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store/index'
+
+
 import Home from '../views/Home.vue'
 import LogIn from '../views/LogIn.vue'
 import Videos from '../views/Videos.vue'
 import Courses from '../views/Courses.vue'
 import Video from '../views/Video.vue'
-import store from '../store/index'
+import SignUp from '../views/SignUp.vue'
+
 
 Vue.use(VueRouter)
 
@@ -19,6 +23,11 @@ const routes = [
     path: '/login',
     name: 'LogIn',
     component: LogIn
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUp
   },
   {
     path: '/courses/:coursestyp',
