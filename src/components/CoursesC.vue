@@ -21,18 +21,26 @@
                 {{ course.description }}
               </p>
             </div>
-            <div class="card-body  m-0 p-2" style="">
+            <div class="card-body  m-0 p-1" style="">
               <div class="d-flex justify-content-center">
                 <p class="align-self-center">
                   <strong><span> Tags:</span></strong>
                   {{ course.tags }}
                 </p>
-                <router-link
-                  :to="{ name: 'Videos', params: { courseid: course.id } }"
-                  class="btn  btn-primary m-4  d-flex justify-content-center"
-                  style="width: 10rem;"
-                  >Ver el curso</router-link
-                >
+                <div class="d-flex">
+                  <router-link
+                    :to="{ name: 'Videos', params: { courseid: course.id } }"
+                    class="btn  btn-primary m-1 d-flex justify-content-center"
+                    style="width: 5rem;"
+                    >Ver el curso
+                  </router-link>
+                  <router-link
+                    :to="{ name: 'Videos', params: { courseid: course.id } }"
+                    class="btn  btn-primary m-1 d-flex justify-content-center"
+                    style="width: 5rem;"
+                    >Agregar
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -50,6 +58,7 @@ export default {
   data() {
     return {
       courses: [],
+      owner: false,
     };
   },
   methods: {
@@ -61,7 +70,9 @@ export default {
     },
   },
   created() {
-    this.fetchCourses();
+    if (this.$route.params.coursestyp === null) {
+      this.fetchCourses();
+    }
   },
   computed: {
     ...mapGetters([
@@ -69,6 +80,7 @@ export default {
       "usuarioAutenticadoObject",
       "tokenObject",
     ]),
+
     titleC() {
       if (this.$route.params.coursestyp === "mycourses") {
         apiCourses
@@ -79,6 +91,11 @@ export default {
           .then((res) => (this.courses = res))
           .finally();
         return "Mis Cursos";
+      } else if (this.$route.params.coursestyp === "createdCourses") {
+        apiCourses
+          .allMadeCourses(this.usuarioAutenticadoObject.email, this.tokenObject)
+          .then((res) => (this.courses = res))
+          .finally();
       } else {
         this.fetchCourses();
         return "Cursos";

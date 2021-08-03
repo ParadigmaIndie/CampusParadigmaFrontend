@@ -30,6 +30,11 @@ const routes = [
     component: SignUp
   },
   {
+    path: '/perfil',
+    name: 'Perfil',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Perfil.vue'),
+  },
+  {
     path: '/courses/:coursestyp',
     name: 'Courses',
     component: Courses,
@@ -51,6 +56,12 @@ const routes = [
     path: '/about',
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    meta: { rutaProtegida: true }
+  },
+  {
+    path: '/createCourse',
+    name: 'CreateCourse',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateCourse.vue'),
     meta: { rutaProtegida: true }
   }
 ]

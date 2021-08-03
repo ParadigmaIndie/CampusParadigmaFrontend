@@ -45,6 +45,7 @@ async function getVideoById(id, token) {
     }
 }
 
+
 export default {
     allVideosByCourse,
     getVideoById
