@@ -22,23 +22,17 @@
               </p>
             </div>
             <div class="card-body  m-0 p-1" style="">
-              <div class="d-flex justify-content-center">
-                <p class="align-self-center">
+              <div class="d-flex bd-highlight mb-3">
+                <p class="p-2 bd-highlight">
                   <strong><span> Tags:</span></strong>
                   {{ course.tags }}
                 </p>
-                <div class="d-flex">
+                <div class="ms-auto p-2 bd-highlight">
                   <router-link
                     :to="{ name: 'Videos', params: { courseid: course.id } }"
-                    class="btn  btn-primary m-1 d-flex justify-content-center"
+                    class="btn  btn-primary   "
                     style="width: 5rem;"
                     >Ver el curso
-                  </router-link>
-                  <router-link
-                    :to="{ name: 'Videos', params: { courseid: course.id } }"
-                    class="btn  btn-primary m-1 d-flex justify-content-center"
-                    style="width: 5rem;"
-                    >Agregar
                   </router-link>
                 </div>
               </div>
@@ -59,12 +53,19 @@ export default {
     return {
       courses: [],
       owner: false,
+      myCourses: false,
     };
   },
   methods: {
     fetchCourses() {
       apiCourses
         .allCourses()
+        .then((res) => (this.courses = res))
+        .finally();
+    },
+    fetchMyCourses() {
+      apiCourses
+        .allMadeCourses(this.usuarioAutenticadoObject.email, this.tokenObject)
         .then((res) => (this.courses = res))
         .finally();
     },
@@ -86,16 +87,16 @@ export default {
         apiCourses
           .allCoursesToSee(
             this.usuarioAutenticadoObject.email,
-            this.tokenObject
+            this.tokenObject,
+            (this.myCourses = true)
           )
           .then((res) => (this.courses = res))
           .finally();
         return "Mis Cursos";
       } else if (this.$route.params.coursestyp === "createdCourses") {
-        apiCourses
-          .allMadeCourses(this.usuarioAutenticadoObject.email, this.tokenObject)
-          .then((res) => (this.courses = res))
-          .finally();
+        console.log("TITEL_C");
+        this.fetchMyCourses();
+        return "Cursos creados";
       } else {
         this.fetchCourses();
         return "Cursos";

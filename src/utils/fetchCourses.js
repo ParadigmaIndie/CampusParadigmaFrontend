@@ -13,7 +13,7 @@ async function allCourses() {
             return console.log(courses.error);
         }
 
-        console.log('Courses', courses);
+        console.log('All Course', courses);
         return courses;
 
     } catch (error) {
@@ -40,7 +40,7 @@ async function allCoursesToSee(email, token) {
             return console.log(courses.error);
         }
 
-        console.log('Courses', courses);
+        console.log('Courses To See', courses);
         return courses;
 
     } catch (error) {
@@ -67,7 +67,7 @@ async function allMadeCourses(email, token) {
             return console.log(courses.error);
         }
 
-        console.log('Courses', courses);
+        console.log('Course My', courses);
         return courses;
 
     } catch (error) {
@@ -75,17 +75,17 @@ async function allMadeCourses(email, token) {
     }
 }
 
-async function deleteCourse(email, token) {
+async function deleteCourse(id, token) {
     try {
         const res = await fetch(
-            `http://localhost:8080/api/v1/courses/made/${email}`,
+            `http://localhost:8080/api/v1/courses/${id}`,
 
             {
                 headers: new Headers({
                     'Authorization': 'Bearer ' + token,
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }),
-                method: 'GET'
+                method: 'DELETE'
             })
 
         const courses = await res.json();
@@ -105,5 +105,7 @@ async function deleteCourse(email, token) {
 export default {
     allCourses,
     allCoursesToSee,
-    allMadeCourses
+    allMadeCourses,
+    deleteCourse,
+
 }

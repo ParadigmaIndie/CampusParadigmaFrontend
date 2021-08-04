@@ -2,11 +2,22 @@
   <div class="container my-4">
     <h1>{{ titleC }}</h1>
     <div v-if="owner" class="d-flex justify-content-left py-4">
+      <form @submit.prevent="deleteCourse()">
+        <button type="submit" class="btn btn-danger m-2">Eliminar Curso</button>
+      </form>
       <form @submit.prevent="">
-        <button type="submit" class="btn btn-danger">Eliminar Curso</button>
+        <button type="submit" class="btn btn-primary m-2">
+          adjuntar video
+        </button>
       </form>
     </div>
-
+    <div v-if="!toSee">
+      <form @submit.prevent="">
+        <button type="submit" class="btn btn-primary m-2">
+          Agregar curso a mis curso para estudiar
+        </button>
+      </form>
+    </div>
     <div v-for="(video, index) in videos" :key="index" class="list-group">
       <div class="row col-12 align-items-center">
         <router-link
@@ -24,7 +35,7 @@
           <!---->
         </router-link>
         <div v-if="owner" class="col-2">
-          <form @submit.prevent="">
+          <form @submit.prevent="deleteVideo(video.id)">
             <button type="submit" class="btn btn-danger">Eliminar</button>
           </form>
         </div>
@@ -43,31 +54,73 @@ export default {
     return {
       videos: [],
       owner: false,
+      toSee: false,
     };
   },
   methods: {
-    deleteVideo() {},
-    isOwner() {
+    fetchToSeeCourses() {
       apiCourses
-        .allMadeCourses(this.usuarioAutenticadoObject.email, this.tokenObject)
+        .allCoursesToSee(this.usuarioAutenticadoObject.email, this.tokenObject)
         .then((res) => {
           var list = res.filter(
             (item) => item.id === this.$route.params.courseid
           );
-          this.owner = list.length === 1 ? true : false;
+          console.log("TOSEE ", list);
+          this.toSee = list.length === 1 ? true : false;
         })
         .finally();
     },
-  },
-  created() {
-    this.isOwner();
-  },
-  computed: {
-    titleC() {
+
+    goToCourses() {
+      this.$router.push({
+        name: "Courses",
+        params: { coursestyp: "createdCourses" },
+      });
+    },
+    deleteVideo(id) {
+      apiVideos
+        .deleteVideoById(id, this.tokenObject)
+        .then((res) => (this.videos = res))
+        .finally();
+    },
+    deleteCourse() {
+      apiCourses
+        .deleteCourse(this.$route.params.courseid, this.tokenObject)
+        .then((res) => {
+          console.log("Delete:", res);
+          this.goToCourses();
+        })
+        .finally();
+    },
+    fetchVideos() {
       apiVideos
         .allVideosByCourse(this.$route.params.courseid, this.tokenObject)
         .then((res) => (this.videos = res))
         .finally();
+    },
+    isOwner() {
+      if (this.usuarioAutenticadoObject === null) {
+        this.owner = false;
+      } else {
+        apiCourses
+          .allMadeCourses(this.usuarioAutenticadoObject.email, this.tokenObject)
+          .then((res) => {
+            var list = res.filter(
+              (item) => item.id === this.$route.params.courseid
+            );
+            this.owner = list.length === 1 ? true : false;
+          })
+          .finally();
+      }
+    },
+  },
+  created() {
+    this.isOwner();
+    this.fetchVideos();
+    this.fetchToSeeCourses();
+  },
+  computed: {
+    titleC() {
       return "Videos del curso";
     },
 

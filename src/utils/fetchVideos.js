@@ -45,8 +45,36 @@ async function getVideoById(id, token) {
     }
 }
 
+async function deleteVideoById(id, token) {
+    try {
+        const res = await fetch(
+            `http://localhost:8080/api/v1/videos/${id}`,
+            {
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }),
+                method: 'DELETE'
+            }
+        )
+
+        const videos = await res.json();
+
+        if (videos.error) {
+            return console.log(videos.error);
+        }
+
+        console.log('Video', videos);
+        return videos;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 export default {
     allVideosByCourse,
-    getVideoById
+    getVideoById,
+    deleteVideoById
 }
