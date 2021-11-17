@@ -1,42 +1,63 @@
 <template>
   <div class="container my-4">
-    <h1>{{ titleC }}</h1>
-    <div v-if="owner" class="d-flex justify-content-left py-4">
+    <p class=" display-4">
+      <strong>{{ titleC }}</strong>
+    </p>
+    <div v-if="owner" class="row">
+      <p class="text-start display-6">
+        Parece que eres el autor de este curso.
+      </p>
+      <p class="text-start">
+        Por ese motivo puedes modificarlo. Ten cuidado con la acciones ya que no
+        se pueden deshacer.
+      </p>
+
       <form @submit.prevent="deleteCourse()">
-        <button type="submit" class="btn btn-danger m-2">Eliminar Curso</button>
+        <button type="submit" class="btn btn-danger mb-2 d-block">
+          Eliminar Curso
+        </button>
       </form>
       <form @submit.prevent="">
-        <button type="submit" class="btn btn-primary m-2">
+        <button type="submit" class="btn btn-primary mb-2 d-block">
           adjuntar video
         </button>
       </form>
     </div>
-    <div v-if="!toSee">
+
+    <div v-if="!toSee" class="d-flex mb-2 position-sticky">
       <form @submit.prevent="">
-        <button type="submit" class="btn btn-primary m-2">
+        <button type="submit" class="btn btn-primary">
           Agregar curso a mis curso para estudiar
         </button>
       </form>
     </div>
     <div v-for="(video, index) in videos" :key="index" class="list-group">
-      <div class="row col-12 align-items-center">
+      <div class="row col-12 mb-2 m-0">
         <router-link
           :to="{ name: 'Video', params: { videoid: video.id } }"
-          class="col list-group-item  list-group-item-action flex-column align-items-between"
+          class="col list-group-item  list-group-item-action"
         >
-          <div class=" d-flex w-400 justify-content-between align-items-center">
-            <h5 class="">{{ video.name }}</h5>
-            <p class="">
-              {{ video.description }}
-            </p>
-            <small>tag: <br />{{ video.tags }}</small>
+          <div class="d-flex align-items-center">
+            <img
+              :src="`https://picsum.photos/1024/480/?image=${index + 1}`"
+              alt="..."
+              style="height: 10rem; object-fit: cover;"
+              class="me-2"
+            />
+            <div class="text-start">
+              <h5 class="">
+                <strong>{{ video.name }}</strong>
+              </h5>
+              <p class="">
+                {{ video.description }}
+              </p>
+              <small>tag: <br />{{ video.tags }}</small>
+            </div>
           </div>
-
-          <!---->
         </router-link>
-        <div v-if="owner" class="col-2">
+        <div v-if="owner" class="col-2 m-0 d-flex">
           <form @submit.prevent="deleteVideo(video.id)">
-            <button type="submit" class="btn btn-danger">Eliminar</button>
+            <button type="submit" class="btn btn-danger">Eliminar video</button>
           </form>
         </div>
       </div>

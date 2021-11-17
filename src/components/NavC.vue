@@ -4,7 +4,7 @@
       <router-link to="/" class="navbar-brand m-2">
         <img alt="Vue logo" src="../assets/logo.svg" />
       </router-link>
-      <div class="me-4" id="navbarToggleExternalContent">
+      <div class="ms-auto">
         <router-link
           v-if="!usuarioAutenticado"
           to="/login"
@@ -12,7 +12,6 @@
         >
           Log In
         </router-link>
-
         <router-link
           v-if="!usuarioAutenticado"
           to="/signup"
@@ -27,7 +26,6 @@
         >
           Descubre
         </router-link>
-
         <router-link
           v-if="usuarioAutenticado"
           class="btn text-white"
@@ -35,17 +33,14 @@
         >
           Mis cursos
         </router-link>
-
         <router-link
           v-if="usuarioAutenticado"
           to="/perfil"
           class="btn text-white"
         >
           Hola
-          <br />
-          {{ usuarioAutenticadoObject.username }}
+          <strong> {{ usuarioAutenticadoObject.username }} </strong>
         </router-link>
-
         <button
           v-if="usuarioAutenticado"
           @click="cerrarSesion"

@@ -102,10 +102,42 @@ async function deleteCourse(id, token) {
     }
 }
 
+async function createCourse(token, name, description, tags) {
+    try {
+        const res = await fetch(
+            `http://localhost:8080/api/v1/courses`,
+            {
+                headers: new Headers({
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                }),
+                method: 'POST',
+                body: JSON.stringify({
+                    name: name,
+                    description: description,
+                    tags: tags,
+                })
+            })
+
+        const courses = await res.json();
+
+        if (courses.error) {
+            return console.log(courses.error);
+        }
+
+        console.log('Courses', courses);
+        return courses;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 export default {
     allCourses,
     allCoursesToSee,
     allMadeCourses,
     deleteCourse,
-
+    createCourse
 }
